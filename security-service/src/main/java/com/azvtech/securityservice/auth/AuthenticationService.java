@@ -1,5 +1,6 @@
 package com.azvtech.securityservice.auth;
 
+import com.azvtech.securityservice.auth.exception.UserAlreadyExistsException;
 import com.azvtech.securityservice.config.JwtService;
 import com.azvtech.securityservice.token.Token;
 import com.azvtech.securityservice.token.TokenRepository;
@@ -28,6 +29,11 @@ public class AuthenticationService {
     private final AuthenticationManager authenticationManager;
 
     public AuthenticationResponse register(RegisterRequest request) {
+        Optional<User> userEmail = userRepository.findByEmail((request.getEmail()));
+        if (userEmail.isPresent()){
+            throw new UserAlreadyExistsException(
+                    "User with e-mail "+request.getEmail() + " already exists");
+        };
         var user = User.builder()
                 .firstname(request.getFirstname())
                 .lastname(request.getLastname())
