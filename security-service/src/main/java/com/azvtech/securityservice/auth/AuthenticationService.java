@@ -13,6 +13,8 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 /**
  * @author Fellipe Toledo
  */
@@ -31,13 +33,14 @@ public class AuthenticationService {
                 .lastname(request.getLastname())
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
-                .role(Role.User)
+                .enable(true)
+                .role(request.getRole())
                 .build();
         var savedUser = userRepository.save(user);
         var jwtToken = jwtService.generateToken(user);
         saveUserToken(savedUser, jwtToken);
         return AuthenticationResponse.builder()
-                .token(jwtToken)
+                .accessToken(jwtToken)
                 .build();
     }
 
@@ -46,19 +49,31 @@ public class AuthenticationService {
                 new UsernamePasswordAuthenticationToken(
                         request.getEmail(),
                         request.getPassword()
-                )
-        );
+                ))
+        ;
         var user = userRepository.findByEmail(request.getEmail())
                 .orElseThrow();
+
         var jwtToken = jwtService.generateToken(user);
         revokeAllUserTokens(user);
-        saveUserToken(user, jwtToken);
+        saveNewUserToken(user, jwtToken);
         return AuthenticationResponse.builder()
-                .token(jwtToken)
+                .accessToken(jwtToken)
                 .build();
     }
 
     private void saveUserToken(User user, String jwtToken) {
+        var token = Token.builder()
+                .user(user)
+                .token(jwtToken)
+                .tokenType(TokenType.BEARER)
+                .revoked(true)
+                .expired(true)
+                .build();
+        tokenRepository.save(token);
+    }
+
+    private void saveNewUserToken(User user, String jwtToken) {
         var token = Token.builder()
                 .user(user)
                 .token(jwtToken)
