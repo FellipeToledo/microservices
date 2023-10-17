@@ -32,6 +32,7 @@ public class User implements UserDetails {
     @NaturalId(mutable = true)
     private String email;
     private String password;
+    private String confirmPassword;
     @Enumerated(EnumType.STRING)
     private Role role;
     private boolean enable;

@@ -17,7 +17,7 @@ public class SecurityApplication {
 		SpringApplication.run(SecurityApplication.class, args);
 	}
 
-	@Bean
+	/*@Bean
 	public CommandLineRunner commandLineRunner(
 			AuthenticationService authenticationService
 	) {
@@ -41,5 +41,5 @@ public class SecurityApplication {
 			System.out.println("Manager token: " + authenticationService.register(manager).getAccessToken());
 
 		};
-	}
+	}*/
 }
