@@ -5,7 +5,6 @@ import com.azvtech.securityservice.config.JwtService;
 import com.azvtech.securityservice.token.Token;
 import com.azvtech.securityservice.token.TokenRepository;
 import com.azvtech.securityservice.token.TokenType;
-import com.azvtech.securityservice.user.Role;
 import com.azvtech.securityservice.user.User;
 import com.azvtech.securityservice.user.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -32,13 +31,14 @@ public class AuthenticationService {
         Optional<User> userEmail = userRepository.findByEmail((request.getEmail()));
         if (userEmail.isPresent()){
             throw new UserAlreadyExistsException(
-                    "User with e-mail "+request.getEmail() + " already exists");
+                    "Usuário com o email "+request.getEmail() + " já cadastrado");
         };
         var user = User.builder()
                 .firstname(request.getFirstname())
                 .lastname(request.getLastname())
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
+                .confirmPassword(passwordEncoder.encode((request.getConfirmPassword())))
                 .enable(true)
                 .role(request.getRole())
                 .build();
