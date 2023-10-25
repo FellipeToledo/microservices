@@ -1,4 +1,3 @@
-
 spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/security
@@ -14,3 +13,20 @@ spring:
       format_sql: true
     database: postgresql
     database-platform: org.hibernate.dialect.PostgreSQLDialect
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: smarteventapi@gmail.com
+    password: rmuj qfqk nogm cit
+    properties:
+      mail:
+      smtp-auth: true
+      smtp-starttls-enable: true
+
+application:
+  security:
+    jwt:
+      secret-Key: B6B55CBE396BE946379462BE4FEA6DDD766AB2E43A83B313787FA454FD
+      expiration: 60000 # a minute
+      refresh-token:
+        expiration: 604800000 # 7 days
