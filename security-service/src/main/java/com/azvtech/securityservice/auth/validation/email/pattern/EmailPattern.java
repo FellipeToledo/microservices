@@ -1,4 +1,4 @@
-package com.azvtech.securityservice.auth.validation.email;
+package com.azvtech.securityservice.auth.validation.email.pattern;
 
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;

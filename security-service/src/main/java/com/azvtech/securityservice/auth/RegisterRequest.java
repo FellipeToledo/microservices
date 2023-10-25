@@ -1,6 +1,6 @@
 package com.azvtech.securityservice.auth;
 
-import com.azvtech.securityservice.auth.validation.email.EmailPattern;
+import com.azvtech.securityservice.auth.validation.email.pattern.EmailPattern;
 import com.azvtech.securityservice.auth.validation.password.PasswordMatching;
 import com.azvtech.securityservice.auth.validation.password.StrongPassword;
 import com.azvtech.securityservice.user.Role;
