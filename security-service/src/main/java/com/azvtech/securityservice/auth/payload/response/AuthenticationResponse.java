@@ -1,4 +1,4 @@
-package com.azvtech.securityservice.auth;
+package com.azvtech.securityservice.auth.payload.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;

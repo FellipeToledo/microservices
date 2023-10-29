@@ -1,4 +1,4 @@
-package com.azvtech.securityservice.user;
+package com.azvtech.securityservice.user.authorization;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

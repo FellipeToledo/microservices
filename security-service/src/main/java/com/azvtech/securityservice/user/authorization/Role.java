@@ -1,5 +1,6 @@
-package com.azvtech.securityservice.user;
+package com.azvtech.securityservice.user.authorization;
 
+import com.azvtech.securityservice.user.authorization.Permission;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -9,7 +10,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import static com.azvtech.securityservice.user.Permission.*;
+import static com.azvtech.securityservice.user.authorization.Permission.*;
 
 /**
  * @author Fellipe Toledo

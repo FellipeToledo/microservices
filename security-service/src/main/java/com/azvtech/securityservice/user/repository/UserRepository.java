@@ -1,5 +1,6 @@
-package com.azvtech.securityservice.user;
+package com.azvtech.securityservice.user.repository;
 
+import com.azvtech.securityservice.user.detail.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

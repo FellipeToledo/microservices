@@ -1,4 +1,4 @@
-package com.azvtech.securityservice.token;
+package com.azvtech.securityservice.user.token;
 
 /**
  * @author Fellipe Toledo

@@ -1,5 +1,11 @@
-package com.azvtech.securityservice.auth;
+package com.azvtech.securityservice.auth.controller;
 
+import com.azvtech.securityservice.auth.payload.response.AuthenticationResponse;
+import com.azvtech.securityservice.auth.service.AuthenticationService;
+import com.azvtech.securityservice.auth.payload.request.AuthenticationRequest;
+import com.azvtech.securityservice.auth.payload.request.RegisterRequest;
+import com.azvtech.securityservice.user.jwt.JwtService;
+import com.azvtech.securityservice.user.token.TokenService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
@@ -21,8 +27,10 @@ import java.io.IOException;
 public class AuthenticationController {
 
     private final AuthenticationService authenticationService;
+    private final JwtService jwtService;
+    private final TokenService tokenService;
 
-    @PostMapping("/register")
+    @PostMapping("/signup")
     public ResponseEntity<AuthenticationResponse> register(
             @Valid
             @RequestBody RegisterRequest request
@@ -30,7 +38,7 @@ public class AuthenticationController {
         return ResponseEntity.ok(authenticationService.register(request));
     }
 
-    @PostMapping("/authenticate")
+    @PostMapping("/signin")
     public ResponseEntity<AuthenticationResponse> authenticate(
             @RequestBody AuthenticationRequest request
     ) {
@@ -42,6 +50,6 @@ public class AuthenticationController {
         HttpServletRequest request,
         HttpServletResponse response
     ) throws IOException {
-        authenticationService.refreshToken(request, response);
+        tokenService.refreshToken(request, response);
     }
 }
