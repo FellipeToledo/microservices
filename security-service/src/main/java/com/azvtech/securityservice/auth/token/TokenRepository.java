@@ -1,4 +1,4 @@
-package com.azvtech.securityservice.user.token;
+package com.azvtech.securityservice.auth.token;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

@@ -1,6 +1,6 @@
 package com.azvtech.securityservice.auth.logout;
 
-import com.azvtech.securityservice.user.token.TokenRepository;
+import com.azvtech.securityservice.auth.token.TokenRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;

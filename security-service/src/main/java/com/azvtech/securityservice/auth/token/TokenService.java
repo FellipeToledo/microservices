@@ -1,17 +1,20 @@
-package com.azvtech.securityservice.user.token;
+package com.azvtech.securityservice.auth.token;
 
+import com.azvtech.securityservice.auth.jwt.JwtService;
 import com.azvtech.securityservice.auth.payload.response.AuthenticationResponse;
-import com.azvtech.securityservice.user.jwt.JwtService;
 import com.azvtech.securityservice.user.detail.User;
 import com.azvtech.securityservice.user.repository.UserRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.propertyeditors.UUIDEditor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.util.Optional;
+import java.util.UUID;
 
 /**
  * @author Fellipe Toledo
@@ -45,6 +48,8 @@ public class TokenService {
                 .build();
         tokenRepository.save(token);
     }
+
+
 
     public void revokeAllUserTokens(User user) {
         var validUserToken = tokenRepository.findAllValidTokensByUser((user.getId()));

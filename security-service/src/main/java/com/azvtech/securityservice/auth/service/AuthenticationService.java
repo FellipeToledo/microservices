@@ -5,13 +5,14 @@ import com.azvtech.securityservice.auth.exception.UserAlreadyExistsException;
 import com.azvtech.securityservice.auth.payload.request.AuthenticationRequest;
 import com.azvtech.securityservice.auth.payload.request.RegisterRequest;
 import com.azvtech.securityservice.user.authorization.Role;
-import com.azvtech.securityservice.user.jwt.JwtService;
-import com.azvtech.securityservice.user.token.TokenService;
+import com.azvtech.securityservice.auth.jwt.JwtService;
+import com.azvtech.securityservice.auth.token.TokenService;
 import com.azvtech.securityservice.user.detail.User;
 import com.azvtech.securityservice.user.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -32,7 +33,7 @@ public class AuthenticationService {
     private final TokenService tokenService;
     private final UserRepository userRepository;
 
-    public AuthenticationResponse register(RegisterRequest request) {
+    public User register(RegisterRequest request) {
         Optional<User> userEmail = userRepository.findByEmail((request.getEmail()));
         if (userEmail.isPresent()){
             throw new UserAlreadyExistsException(
@@ -49,10 +50,11 @@ public class AuthenticationService {
         var jwtToken = jwtService.generateToken(user);
         var refreshToken = jwtService.generateRefreshToken(user);
         tokenService.saveUserToken(savedUser, jwtToken);
-        return AuthenticationResponse.builder()
+        AuthenticationResponse.builder()
                 .accessToken(jwtToken)
                 .refreshToken(refreshToken)
                 .build();
+        return user;
     }
 
     public AuthenticationResponse authenticate(AuthenticationRequest request) {
