@@ -1,5 +1,6 @@
 package com.azvtech.securityservice.config;
 
+import com.azvtech.securityservice.user.jwt.JwtAuthenticationFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,9 +14,9 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.logout.LogoutHandler;
 
-import static com.azvtech.securityservice.user.Permission.*;
-import static com.azvtech.securityservice.user.Role.ADMIN;
-import static com.azvtech.securityservice.user.Role.MANAGER;
+import static com.azvtech.securityservice.user.authorization.Permission.*;
+import static com.azvtech.securityservice.user.authorization.Role.ADMIN;
+import static com.azvtech.securityservice.user.authorization.Role.MANAGER;
 import static org.springframework.http.HttpMethod.*;
 import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
 

@@ -1,11 +1,10 @@
-package com.azvtech.securityservice.user;
+package com.azvtech.securityservice.user.detail;
 
-import com.azvtech.securityservice.token.Token;
+import com.azvtech.securityservice.user.token.Token;
+import com.azvtech.securityservice.user.authorization.Role;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import jakarta.validation.constraints.NotNull;
+import lombok.*;
 import org.hibernate.annotations.NaturalId;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -27,15 +26,18 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue
     private Integer id;
-    private String firstname;
-    private String lastname;
+    @NotNull
+    private String username;
+    @NotNull
     @NaturalId(mutable = true)
     private String email;
     private String password;
-    private String confirmPassword;
+    @NotNull
     @Enumerated(EnumType.STRING)
     private Role role;
-    private boolean enable;
+    @NotNull
+    private boolean enabled;
+
     @OneToMany(mappedBy = "user")
     private List<Token> tokens;
 
@@ -71,6 +73,6 @@ public class User implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return enable;
+        return enabled;
     }
 }

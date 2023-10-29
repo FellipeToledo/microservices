@@ -1,14 +1,7 @@
 package com.azvtech.securityservice;
 
-import com.azvtech.securityservice.auth.AuthenticationService;
-import com.azvtech.securityservice.auth.RegisterRequest;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
-
-import static com.azvtech.securityservice.user.Role.ADMIN;
-import static com.azvtech.securityservice.user.Role.MANAGER;
 
 @SpringBootApplication
 public class SecurityApplication {

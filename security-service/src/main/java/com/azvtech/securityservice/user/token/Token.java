@@ -1,6 +1,6 @@
-package com.azvtech.securityservice.token;
+package com.azvtech.securityservice.user.token;
 
-import com.azvtech.securityservice.user.User;
+import com.azvtech.securityservice.user.detail.User;
 import jakarta.persistence.*;
 import lombok.*;
 
