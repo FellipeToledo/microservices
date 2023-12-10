@@ -1,5 +1,6 @@
-package com.azvtech.securityservice.auth.jwt;
+package com.azvtech.securityservice.config;
 
+import com.azvtech.securityservice.auth.jwt.JwtService;
 import com.azvtech.securityservice.auth.token.TokenRepository;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

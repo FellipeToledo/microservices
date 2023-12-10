@@ -13,6 +13,8 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -33,7 +35,8 @@ public class TokenService {
                 .token(jwtToken)
                 .tokenType(TokenType.BEARER)
                 .revoked(true)
-                .expired(true)
+                .expired(jwtService.isTokenExpired(jwtToken))
+                .expirationTime(jwtService.extractExpiration(jwtToken))
                 .build();
         tokenRepository.save(token);
     }
@@ -44,12 +47,11 @@ public class TokenService {
                 .token(jwtToken)
                 .tokenType(TokenType.BEARER)
                 .revoked(false)
-                .expired(false)
+                .expired(jwtService.isTokenExpired(jwtToken))
+                .expirationTime(jwtService.extractExpiration(jwtToken))
                 .build();
         tokenRepository.save(token);
     }
-
-
 
     public void revokeAllUserTokens(User user) {
         var validUserToken = tokenRepository.findAllValidTokensByUser((user.getId()));
@@ -79,7 +81,7 @@ public class TokenService {
             if (jwtService.isTokenValid(refreshToken, user)) {
                 var accessToken = jwtService.generateToken(user);
                 revokeAllUserTokens(user);
-                saveNewUserToken(user, accessToken);
+                saveUserToken(user, accessToken);
                 var authResponse = AuthenticationResponse.builder()
                         .accessToken(accessToken)
                         .refreshToken(refreshToken)
@@ -87,5 +89,20 @@ public class TokenService {
                 new ObjectMapper().writeValue(response.getOutputStream(), authResponse);
             }
         }
+    }
+
+    public String validateToken(String theToken) {
+        Optional<Token> token = tokenRepository.findByToken(theToken);
+        if(token.isEmpty()){
+            return "Invalid verification token";
+        }
+        User user = token.get().getUser();
+        if (!jwtService.isTokenValid(theToken, user)) {
+            return "Verification link already expired," +
+                    " Please, click the link below to receive a new verification link";
+        }
+        user.setEnabled(true);
+        userRepository.save(user);
+        return "account successfully verified";
     }
 }

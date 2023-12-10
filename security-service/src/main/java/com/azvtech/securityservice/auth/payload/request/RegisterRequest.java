@@ -11,6 +11,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
+
 /**
  * @author Fellipe Toledo
  */
@@ -18,18 +20,14 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@PasswordMatching(
-        password = "password",
-        confirmPassword = "confirmPassword",
-        message = "A senha e a confirmação da senha devem ser iguais!")
-
+@PasswordMatching(password = "Password", confirmPassword = "confirmPassword")
 public class RegisterRequest {
     @NotBlank
     @Size(min = 3, max = 20)
-    private String username;
+    private String fullName;
 
     @NotBlank
-    @Size(max = 50)
+    @Size(min = 4, max = 50)
     @EmailPattern
     private String email;
 
@@ -37,8 +35,8 @@ public class RegisterRequest {
     @StrongPassword
     private String password;
 
-    @NotBlank
     private String confirmPassword;
 
     private Role role;
+
 }

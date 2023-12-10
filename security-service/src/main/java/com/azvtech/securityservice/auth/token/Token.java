@@ -33,5 +33,4 @@ public class Token {
         this.token = token;
         this.user = user;
     }
-
 }

@@ -1,6 +1,7 @@
 package com.azvtech.securityservice.auth.validation.email.account;
 import com.azvtech.securityservice.auth.jwt.JwtService;
 
+import com.azvtech.securityservice.auth.payload.response.MessageResponse;
 import com.azvtech.securityservice.auth.token.TokenService;
 import com.azvtech.securityservice.user.detail.User;
 import jakarta.mail.MessagingException;
@@ -37,11 +38,9 @@ public class AccountValidationListener implements ApplicationListener<AccountVal
         // create a verification token for the user
         var jwtToken = jwtService.generateToken(user);
 
-        // save the verification token for the user
-        tokenService.saveUserToken(user, jwtToken );
-
+        tokenService.saveUserToken(user, jwtToken);
         // Build the verification URL tobe sent to the user
-        String url = event.getApplicationUrl()+"/api/v1/auth/register/verifyEmail?token="+jwtToken;
+        String url = event.getApplicationUrl()+"/api/v1/auth/validate?token="+jwtToken;
 
         // Send the e-mail
         try {
@@ -49,13 +48,17 @@ public class AccountValidationListener implements ApplicationListener<AccountVal
         } catch (MessagingException | UnsupportedEncodingException e) {
             throw new RuntimeException(e);
         }
-        log.info("Click the link to verify your registration : {}", url);
+
+        //Log
+        String response = "User registered successfully! Verify your email to activate your account";
+        log.info(response);
+
     }
 
     public void sendVerificationEmail (String url) throws MessagingException, UnsupportedEncodingException {
         String subject = "Email Verification";
         String senderName = "Smart Event Management";
-        String mailContent = "<p> Hi, "+ user.getUsername()+ ", </p>"+
+        String mailContent = "<p> Hi, "+ user.getFullName()+ ", </p>"+
                 "<p>Thank you for registering with us, "+"" +
                 "Please, follow the link below to complete your registration.</p>"+
                 "<a href=\"" +url+ "\">Verify your email to activate your account</a>"+
