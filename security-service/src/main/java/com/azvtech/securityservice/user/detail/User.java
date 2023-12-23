@@ -1,6 +1,6 @@
 package com.azvtech.securityservice.user.detail;
 
-import com.azvtech.securityservice.auth.token.Token;
+import com.azvtech.securityservice.authentication.token.Token;
 import com.azvtech.securityservice.user.authorization.Role;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
