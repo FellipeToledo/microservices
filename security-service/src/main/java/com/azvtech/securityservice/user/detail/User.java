@@ -1,6 +1,6 @@
 package com.azvtech.securityservice.user.detail;
 
-import com.azvtech.securityservice.user.token.Token;
+import com.azvtech.securityservice.authentication.token.Token;
 import com.azvtech.securityservice.user.authorization.Role;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -27,7 +27,7 @@ public class User implements UserDetails {
     @GeneratedValue
     private Integer id;
     @NotNull
-    private String username;
+    private String fullName;
     @NotNull
     @NaturalId(mutable = true)
     private String email;
@@ -37,7 +37,6 @@ public class User implements UserDetails {
     private Role role;
     @NotNull
     private boolean enabled;
-
     @OneToMany(mappedBy = "user")
     private List<Token> tokens;
 
@@ -49,6 +48,10 @@ public class User implements UserDetails {
     @Override
     public String getUsername() {
         return email;
+    }
+
+    public String getFullName() {
+        return fullName;
     }
 
     @Override

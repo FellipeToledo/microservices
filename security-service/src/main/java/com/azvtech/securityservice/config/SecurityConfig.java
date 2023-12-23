@@ -1,6 +1,5 @@
 package com.azvtech.securityservice.config;
 
-import com.azvtech.securityservice.user.jwt.JwtAuthenticationFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -37,7 +36,7 @@ public class SecurityConfig {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(req ->
-                        req.requestMatchers("/api/v1/auth/**")
+                        req.requestMatchers("/api/v1/security/**")
                                 .permitAll()
 
                                 .requestMatchers("/api/v1/management/**").hasAnyRole(ADMIN.name(), MANAGER.name())
@@ -59,12 +58,12 @@ public class SecurityConfig {
                 .authenticationProvider(authenticationProvider)
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .logout(logout ->
-                logout.logoutUrl("/api/v1/auth/logout")
+                logout.logoutUrl("/api/v1/authentication/logout")
                         .addLogoutHandler(logoutHandler)
                         .logoutSuccessHandler(
                         (request, response, authentication) ->
                         SecurityContextHolder.clearContext()
-                ));
+                )).cors(AbstractHttpConfigurer::disable);
         return http.build();
     }
 }
